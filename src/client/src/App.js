@@ -3,10 +3,7 @@ import "./tailwind.css";
 import "./App.css";
 
 function App() {
-  const [bookedStatus, setBookedStatus] = useState({
-    isBooked: false,
-    timeleft: -90,
-  });
+  const [bookedStatus, setBookedStatus] = useState(null);
   const [justBooked, setJustBooked] = useState(false);
 
   const shouldShowBookButton = useMemo(() => {
@@ -25,10 +22,6 @@ function App() {
     return false;
   }, [justBooked, bookedStatus]);
 
-  const onBookTable = () => {
-    setJustBooked(true);
-  };
-
   useEffect(() => {
     fetch("/api/pool-table-booked")
       .then((res) => res.json())
@@ -37,6 +30,19 @@ function App() {
         setBookedStatus(json);
       });
   }, []); // empty 2nd arg - only runs once
+
+  const onBookTable = () => {
+    fetch("/api/pool-table-booked", {
+      method: "POST",
+    })
+      .then((res) => res.json())
+      .then(() => {
+        console.log("Booked!");
+        setJustBooked(true);
+      });
+
+    setJustBooked(true);
+  };
 
   const title = useMemo(() => {
     if (justBooked) {
@@ -50,19 +56,21 @@ function App() {
     if (bookedStatus.isBooked === false) {
       return `Pool table is available!`;
     }
-    return `Sorry, table is in use - try again in ${bookedStatus.timeLeft} minutes!`;
+    return `Sorry, table is in use - try again in ${
+      Math.floor(bookedStatus.timeLeft) + 1
+    } minutes!`;
   }, [bookedStatus, justBooked]);
 
   return (
     <div className="App">
       <section class="bg-white dark:bg-gray-900 h-screen">
-        <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16">
+        <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 ">
           <h1 class="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">
             {title}
           </h1>
-          <p class="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 lg:px-48 dark:text-gray-400">
+          {/* <p class="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 lg:px-48 dark:text-gray-400">
             fluffy fluff fluff
-          </p>
+          </p> */}
           <div class="flex flex-col space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
             <pre>{bookedStatus === null}</pre>
             {shouldShowBookButton && (

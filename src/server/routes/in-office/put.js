@@ -1,3 +1,4 @@
-module.exports = putInOffice = async () => {
-  return 'You are in the office'
-}
+module.exports = putInOffice = async (context) => {
+  console.log("AAAAAAAAAAAAAA!!!!!", context);
+  return "You are in the office";
+};
