@@ -11,11 +11,11 @@ module.exports = postScore = async ({ matches }) => {
 
     console.log(matches)
 
-    const scores = match.match(/[^(game)][a-zA-Z]+/g)
-    const names = match.match(/\w^(\d)+/g)
+    const scores = match.match(/\d+/g)
+    const names = match.match(/[^(game)][a-zA-Z]+/g)
 
-    const team1Score = scores[0]
-    const team2Score = scores[1]
+    const team1Score = Number.parseInt(scores[0])
+    const team2Score = Number.parseInt(scores[1])
 
     const team1Ranking = team1Score > team2Score ? 1 : 0
     const team2Ranking = team2Score > team1Score ? 1 : 0
