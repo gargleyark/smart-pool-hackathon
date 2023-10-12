@@ -5,7 +5,7 @@ const trueskill = require('trueskill')
 module.exports = postScore = async ({ matches }) => {
   console.log('post "score" route hit')
   try {
-    const result = await query(`SELECT * from users ORDER BY weighting DESC;`)
+    const result = await query(`SELECT * from users;`)
     const users = result.rows
     const match = matches[0] //game james mike 5 10
 
