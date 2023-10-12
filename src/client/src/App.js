@@ -22,13 +22,13 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        {bookedStatus?.booked === false && (
+        {bookedStatus?.booked === true && (
           <h1>
             Sorry, table was already booked - try again in{' '}
             {bookedStatus.timeLeft} minutes!
           </h1>
         )}
-        {bookedStatus?.booked === true && <h1>Pool table booked, enjoy!</h1>}
+        {bookedStatus?.booked === false && <h1>Pool table booked, enjoy!</h1>}
         {!bookedStatus && <h1>Checking if pool table is booked...</h1>}
       </header>
     </div>
