@@ -12,7 +12,7 @@ module.exports = getScoreboard = async () => {
     const scoreboard = result.rows
       .map(({ name, weighting }) => ({
         name,
-        weighting: JSON.parse(weighting)[0],
+        weighting: weighting[0],
       }))
       .sort((a, b) => b.weighting - a.weighting)
 
