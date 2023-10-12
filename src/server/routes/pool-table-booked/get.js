@@ -1,24 +1,28 @@
 const nodeFetch = require('node-fetch')
 require('dotenv').config()
+var query = require('../../bin/database.js')
 
 module.exports = getPoolTableBooked = async (req, res, next) => {
-  // try {
-  //   const url = `https://api.sheetson.com/v2/sheets/pool`
-  //   const response = await nodeFetch(url, {
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       Authorization: `Bearer ${process.env.SHEETSON_API_KEY || ''}`,
-  //       'X-Sheetson-Spreadsheet-Id': process.env.SHEET_ID || '',
-  //     },
-  //   })
-  //   const json = await response.json()
+  console.log('get "pool-table-booked" route hit')
+  try {
+    result = await query(
+      `SELECT * from bookings ORDER BY bookings_id DESC LIMIT 1;`
+    )
 
-  //   console.log(json)
+    console.log(result)
 
-  res.send({ json: 'test' })
-  //   // return json.results || error
-  // } catch (e) {
-  //   console.log(e)
-  //   return { error: JSON.stringify(e) }
-  // }
+    const now = new Date() - 0
+
+    const endTime = result.rows[0].end_time
+
+    const timeLeft = new Date(endTime) - 0 - now
+
+    const isBooked = timeLeft > 0
+
+    res.send({ isBooked, timeLeft: timeLeft / 60 / 1000 })
+    // return json.results || error
+  } catch (e) {
+    console.log(e)
+    return { error: e }
+  }
 }

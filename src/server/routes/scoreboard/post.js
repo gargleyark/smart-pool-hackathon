@@ -1,3 +1,3 @@
-module.exports = postScore = (req, res, next) => {
-  return 'New leaderboard'
+module.exports = postScore = ({ matches }) => {
+  return matches[0]
 }

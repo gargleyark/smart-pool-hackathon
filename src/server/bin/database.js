@@ -2,24 +2,21 @@
 require('dotenv').config()
 const pg = require('pg')
 
+async function query(sql){
+
 const client = new pg.Client({
-    host: process.env.DATABASE_URL,
-    port: process.env.PORT,
-    database: process.env.DATABASE_NAME,
-    user: process.env.DATABASE_USER,
-    password: process.env.DATABASE_PASSWORD,
-    ssl: true
+  host: process.env.DATABASE_URL,
+  port: process.env.DATABSE_PORT,
+  database: process.env.DATABASE_NAME,
+  user: process.env.DATABASE_USER,
+  password: process.env.DATABASE_PASSWORD,
+  ssl: true
 })
 
-async function connectDatabase(){
-  client.connect(function (err) {
-    if (!err) {
-      console.log('Database is connected!');
-    } else {
-      console.log('Error connecting database!');
-    }
-  });
-  return client
+  await client.connect();
+  const result = await client.query(sql);
+  await client.end();
+  return result
 }
 
-module.exports = connectDatabase();
+module.exports = query;
