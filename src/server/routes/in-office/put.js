@@ -1,3 +1,5 @@
+var query = require('../../bin/database.js')
+
 module.exports = putInOffice = async (context) => {
   const othersInOffice = await query(`SELECT * from in_the_office;`);
 
