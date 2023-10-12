@@ -26,7 +26,6 @@ function App() {
     fetch("/api/pool-table-booked")
       .then((res) => res.json())
       .then((json) => {
-        console.log("LE JAISON:", json);
         setBookedStatus(json);
       });
   }, []); // empty 2nd arg - only runs once
@@ -37,7 +36,6 @@ function App() {
     })
       .then((res) => res.json())
       .then(() => {
-        console.log("Booked!");
         setJustBooked(true);
       });
 

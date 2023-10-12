@@ -44,7 +44,21 @@ app.message(/^leaderboard$/i, async ({ context, say }) => {
 
 app.message(/^in office$/i, async ({ context, say }) => {
   const inOffice = await putInOffice(context);
-  await say(inOffice);
+
+  if (inOffice.matchedUser) {
+    await app.client.chat.postMessage({
+      token: process.env.SLACK_BOT_TOKEN,
+      channel: inOffice.matchedUser,
+      text: `Hey you have been matched for a game of pool with <@${context.userId}>!`,
+    });
+    await app.client.chat.postMessage({
+      token: process.env.SLACK_BOT_TOKEN,
+      channel: context.userId,
+      text: `Hey you have been matched for a game of pool with <@${inOffice.matchedUser}>!`,
+    });
+  } else {
+    await say(inOffice.message);
+  }
 });
 
 module.exports = app;
