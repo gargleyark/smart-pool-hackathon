@@ -9,7 +9,9 @@ module.exports = putInOffice = async (context) => {
     }
   } else {
     result = await query(
-      `INSERT INTO in_the_office(slack_id, in_the_office) VALUES (${context.userId}, to_timestamp((${Date.now()}) / 1000.0));`
+      `INSERT INTO public.in_the_office(slack_id, in_the_office) VALUES (${
+        context.userId
+      }, to_timestamp((${Date.now()}) / 1000.0));`
     )
   }
 
