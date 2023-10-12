@@ -14,7 +14,7 @@ module.exports = getScoreboard = async () => {
         name,
         weighting: weighting[0],
       }))
-      .sort((a, b) => b.weighting - a.weighting)
+      .sort((a, b) => a.weighting - b.weighting)
 
     return scoreboard
       .map(
