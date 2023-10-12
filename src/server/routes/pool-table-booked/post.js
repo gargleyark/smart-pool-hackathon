@@ -1,27 +1,17 @@
-const nodeFetch = require('node-fetch')
+var db = require('../../bin/database.js');
+const fifthteen = 900000;
 module.exports = postPoolTableBooked = async (req, res, next) => {
   console.log('post "pool-table-booked" route hit')
   try {
-    const url = `https://api.sheetson.com/v2/sheets/pool`
-    const response = await nodeFetch(url, {
-      method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${process.env.SHEETSON_API_KEY || ''}`,
-        'X-Sheetson-Spreadsheet-Id': process.env.SHEET_ID || '',
-      },
-      body: JSON.stringify({
-        inUse: 'FALSE',
-      }),
-    })
-    const json = await response.text()
+    
+    result = db.query(`INSERT INTO bookings(start_time, end_time) VALUES (to_timestamp(${Date.now()} / 1000.0), to_timestamp(${Date.now()} + ${fifthteen} / 1000.0));`)
 
-    console.log(json)
+    console.log(result)
 
-    res.send({ json })
+    res.send({ result })
     // return json.results || error
   } catch (e) {
     console.log(e)
-    return { error: JSON.stringify(e) }
+    return { error: result }
   }
 }
