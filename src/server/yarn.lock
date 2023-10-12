@@ -682,6 +682,11 @@
   "resolved" "https://registry.npmjs.org/forwarded/-/forwarded-0.1.2.tgz"
   "version" "0.1.2"
 
+"free-gaussian@0.1.0":
+  "integrity" "sha512-46xNORW7aWkvIyvqFkRDOxKUAUpWl09zNdCq0fuyw9YchQjZrnXa9HGSDcaxbcvh6nNUjCntC4pBtYyLNiAgmw=="
+  "resolved" "https://registry.npmjs.org/free-gaussian/-/free-gaussian-0.1.0.tgz"
+  "version" "0.1.0"
+
 "fresh@0.5.2":
   "integrity" "sha1-PYyt2Q2XZWn6g1qx+OSyOhBWBac="
   "resolved" "https://registry.npmjs.org/fresh/-/fresh-0.5.2.tgz"
@@ -1577,6 +1582,13 @@
   "version" "3.1.0"
   dependencies:
     "nopt" "~1.0.10"
+
+"trueskill@^0.0.2":
+  "integrity" "sha512-DBXvW8UKeSdSOeRxYA/eco1oCuxNGc6qxRzftikZ9Z914E+A+fp0/9kY+2xpbZj7E6no0gzNM3uVxXd5s4roZA=="
+  "resolved" "https://registry.npmjs.org/trueskill/-/trueskill-0.0.2.tgz"
+  "version" "0.0.2"
+  dependencies:
+    "free-gaussian" "0.1.0"
 
 "tsscmp@^1.0.6":
   "integrity" "sha512-LxhtAkPDTkVCMQjt2h6eBVY28KCjikZqZfMcC15YBeNjkgUpdCfBu5HoiOTDu86v6smE8yOjyEktJ8hlbANHQA=="
