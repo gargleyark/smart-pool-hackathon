@@ -1,20 +1,22 @@
 var query = require('../../bin/database.js')
 
 module.exports = putInOffice = async (context) => {
-  const othersInOffice = await query(`SELECT * from in_the_office;`);
+  const othersInOffice = await query(`SELECT * from in_the_office;`)
 
   if (othersInOffice.rows.length > 0) {
     return {
       matchedUser: othersInOffice.rows[0].slack_id,
-    };
+    }
   } else {
     result = await query(
-      `UPDATE users SET in_the_office = ${Date.now} WHERE slack_id = ${context.userId}`
-    );
+      `UPDATE users SET in_the_office = ${new Date().getTime()} WHERE slack_id = ${
+        context.userId
+      }`
+    )
   }
 
-  return { message: "You are in the office and ready to play! G🎱🎱d luck!" };
-};
+  return { message: 'You are in the office and ready to play! G🎱🎱d luck!' }
+}
 
 // // context looks like:
 // const contextExample = {
