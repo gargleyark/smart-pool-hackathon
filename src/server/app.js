@@ -1,29 +1,38 @@
-const { App } = require('@slack/bolt')
+const { App, ExpressReceiver } = require('@slack/bolt')
 const express = require('express')
 const path = require('path')
 const cookieParser = require('cookie-parser')
 const logger = require('morgan')
+require('dotenv').config()
 
 const apiRouter = require('./routes/api')
 
 const app = express()
 
-const boltApp = new App({
-  signingSecret: process.env.SLACK_SIGNING_SECRET,
-  token: process.env.SLACK_BOT_TOKEN,
-  endpoints: '/',
-})
+// const boltApp = new App({
+//   signingSecret: process.env.SLACK_SIGNING_SECRET,
+//   token: process.env.SLACK_BOT_TOKEN,
+//   endpoints: '/',
+// })
 
-boltApp.message('pool', async ({ message, say }) => {
-  await say(`Hey there <@${message.user}>!`)
-})
+// const boltReceiver = new ExpressReceiver({
+//   signingSecret: process.env.SLACK_SIGNING_SECRET,
+//   endpoints: '/',
+// })
+// const boltApp = new App({
+//   token: process.env.SLACK_BOT_TOKEN,
+//   receiver: boltReceiver,
+// })
+
+// boltApp.event('member_joined_channel', ({ event }) => console.log(event))
+// boltApp.event('message', ({ event, say }) => say('hello'))
 
 app.use(logger('dev'))
 app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 app.use(cookieParser())
 
-app.use('/slack/events', boltApp.receiver.router)
+// app.use('/slack/events', boltApp.receiver)
 
 // mount our api router here
 app.use('/api', apiRouter)
