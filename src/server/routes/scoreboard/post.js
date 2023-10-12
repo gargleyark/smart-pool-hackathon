@@ -40,7 +40,7 @@ module.exports = postScore = async ({ matches }) => {
         })
       } else {
         console.log(user.weighting)
-        const userWeighting = JSON.parse(user.weighting)
+        const userWeighting = user.weighting
         usersToUpdate.push({
           name: user.name,
           skill: userWeighting,
@@ -61,7 +61,7 @@ module.exports = postScore = async ({ matches }) => {
         })
       } else {
         console.log(user.weighting)
-        const userWeighting = JSON.parse(user.weighting)
+        const userWeighting = user.weighting
         usersToUpdate.push({
           name: user.name,
           skill: userWeighting,
