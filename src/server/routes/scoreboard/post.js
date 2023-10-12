@@ -24,6 +24,7 @@ module.exports = postScore = async ({ matches }) => {
     const team2Names = names.length > 2 ? [names[2], names[3]] : [names[1]]
 
     const usersToUpdate = []
+    const usersToCreate = []
     const warnings = []
 
     team1Names.forEach((name) => {
@@ -32,7 +33,7 @@ module.exports = postScore = async ({ matches }) => {
 
       if (!user) {
         warnings.push(`Could not find user ${name}, creating a new user`)
-        usersToUpdate.push({
+        usersToCreate.push({
           name: name.trim(),
           skill: [25.0, 25.0 / 3.0],
           rank: team1Ranking,
@@ -52,7 +53,7 @@ module.exports = postScore = async ({ matches }) => {
       const user = users.find((user) => user.name === name.trim())
       if (!user) {
         warnings.push(`Could not find user ${name}, creating a new user`)
-        usersToUpdate.push({
+        usersToCreate.push({
           name: name.trim(),
           skill: [25.0, 25.0 / 3.0],
           rank: team2Ranking,
@@ -73,6 +74,13 @@ module.exports = postScore = async ({ matches }) => {
       const weighting = JSON.stringify(skill)
       query(
         `UPDATE users SET weighting = '${weighting}' WHERE name = '${name}';`
+      )
+    })
+
+    usersToCreate.forEach(({ name, skill }) => {
+      const weighting = JSON.stringify(skill)
+      query(
+        `INSERT INTO users (name, weighting) VALUES ('${name}', '${weighting}');`
       )
     })
 
