@@ -9,6 +9,8 @@ module.exports = postScore = async ({ matches }) => {
     const users = result.rows
     const match = matches[0] //game james mike 5 10
 
+    console.log(matches)
+
     const scores = match.match(/[^(game)][a-zA-Z]+/g)
     const names = match.match(/\w^(\d)+/g)
 
