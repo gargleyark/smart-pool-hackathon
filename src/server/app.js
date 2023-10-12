@@ -1,28 +1,50 @@
-const express = require("express");
-const path = require("path");
-const cookieParser = require("cookie-parser");
-const logger = require("morgan");
+// const { App, ExpressReceiver } = require('@slack/bolt')
+// const express = require('express')
+const path = require('path')
+// const cookieParser = require('cookie-parser')
+// const logger = require('morgan')
+require('dotenv').config()
+const getPoolTableBooked = require('./routes/pool-table-booked/get')
+const postPoolTableBooked = require('./routes/pool-table-booked/post')
 
-const apiRouter = require("./routes/api");
+const deleteScore = require('./routes/scoreboard/delete')
+const getScoreboard = require('./routes/scoreboard/get')
+const postScore = require('./routes/scoreboard/post')
 
-const app = express();
+const putInOffice = require('./routes/in-office/put')
 
-app.use(logger("dev"));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
+const getSummary = require('./routes/summary/get')
 
-// mount our api router here
-app.use("/api", apiRouter);
+const express = require('express')
+const { App, ExpressReceiver } = require('@slack/bolt')
+const receiver = new ExpressReceiver({
+  signingSecret: process.env.SLACK_SIGNING_SECRET,
+})
+receiver.router.use(express.static(path.join(__dirname, '../client/build')))
+receiver.router.get('/api/pool-table-booked', getPoolTableBooked)
+receiver.router.post('/api/pool-table-booked', postPoolTableBooked)
+receiver.router.get('/api/summary', getSummary)
 
-// Serve static files from the React app
-app.use(express.static(path.join(__dirname, "../client/build")));
+const app = new App({ token: process.env.SLACK_BOT_TOKEN, receiver })
 
-// The "catchall" handler: for any request that doesn't
-// match one above, send back React's index.html file.
-app.get("*", (req, res) => {
-  console.log("req.path", req.path);
-  res.sendFile(path.join(__dirname + "../client/build/index.html"));
-});
+app.message(/^game.*/i, async ({ context, say }) => {
+  const newLeaderboard = await postScore(context)
+  await say(newLeaderboard)
+})
 
-module.exports = app;
+app.message(/^delete last game$/i, async ({ context, say }) => {
+  const newLeaderboard = await deleteScore(context)
+  await say(newLeaderboard)
+})
+
+app.message(/^leaderboard$/i, async ({ context, say }) => {
+  const leaderboard = await getScoreboard(context)
+  await say(leaderboard)
+})
+
+app.message(/^in office$/i, async ({ context, say }) => {
+  const inOffice = await putInOffice(context)
+  await say(inOffice)
+})
+
+module.exports = app

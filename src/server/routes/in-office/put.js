@@ -1,3 +1,3 @@
-module.exports = putInOffice = async (req, res, next) => {
-  res.send({ json: { mocked: true } })
+module.exports = putInOffice = async () => {
+  return 'You are in the office'
 }
