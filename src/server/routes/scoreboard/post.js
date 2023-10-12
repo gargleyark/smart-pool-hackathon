@@ -80,7 +80,7 @@ module.exports = postScore = async ({ matches }) => {
     usersToCreate.forEach(({ name, skill }) => {
       const weighting = JSON.stringify(skill)
       query(
-        `INSERT INTO users (name, weighting) VALUES ('${name}', '${weighting}');`
+        `INSERT INTO users (name, weighting, slack_id) VALUES ('${name}', '${weighting}', '${name}');`
       )
     })
 
