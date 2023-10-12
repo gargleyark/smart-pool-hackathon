@@ -39,7 +39,8 @@ module.exports = postScore = async ({ matches }) => {
           rank: team1Ranking,
         })
       } else {
-        const userWeighting = JSON.parse(user.weighting)
+        console.log(user.weighting)
+        const userWeighting = user.weighting
         usersToUpdate.push({
           name: user.name,
           skill: userWeighting,
@@ -59,7 +60,8 @@ module.exports = postScore = async ({ matches }) => {
           rank: team2Ranking,
         })
       } else {
-        const userWeighting = JSON.parse(user.weighting)
+        console.log(user.weighting)
+        const userWeighting = user.weighting
         usersToUpdate.push({
           name: user.name,
           skill: userWeighting,
@@ -69,6 +71,7 @@ module.exports = postScore = async ({ matches }) => {
     })
 
     trueskill.AdjustPlayers(usersToUpdate)
+    trueskill.AdjustPlayers(usersToCreate)
 
     usersToUpdate.forEach(({ name, skill }) => {
       const weighting = JSON.stringify(skill)

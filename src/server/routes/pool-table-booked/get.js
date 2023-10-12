@@ -17,7 +17,7 @@ module.exports = getPoolTableBooked = async (req, res, next) => {
     const endTime = result.rows[0].end_time
     console.log(endTime)
 
-    const timeLeft = new Date(endTime) - 0 - now + 3600000
+    const timeLeft = new Date(endTime) - 0 - now
     console.log(timeLeft)
 
     const isBooked = timeLeft > 0
