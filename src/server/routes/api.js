@@ -5,6 +5,6 @@ const express = require('express')
 const router = express.Router()
 
 router.get('/pool-table-booked', getPoolTableBooked)
-router.post('/pool-table-booked', postPoolTableBooked)
+router.put('/pool-table-booked', postPoolTableBooked)
 
 module.exports = router
