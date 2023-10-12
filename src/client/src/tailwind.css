@@ -597,10 +597,6 @@ video {
   margin-bottom: 2rem;
 }
 
-.ml-2 {
-  margin-left: 0.5rem;
-}
-
 .flex {
   display: flex;
 }
@@ -613,32 +609,12 @@ video {
   display: table;
 }
 
-.h-3 {
-  height: 0.75rem;
-}
-
-.h-3\.5 {
-  height: 0.875rem;
-}
-
 .h-screen {
   height: 100vh;
 }
 
-.w-3 {
-  width: 0.75rem;
-}
-
-.w-3\.5 {
-  width: 0.875rem;
-}
-
 .max-w-screen-xl {
   max-width: 1280px;
-}
-
-.flex-row {
-  flex-direction: row;
 }
 
 .flex-col {
