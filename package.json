@@ -2,6 +2,7 @@
   "name": "mern-boilerplate",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "start": "cd src/server && npm install && npm start",
     "build-fe": "cd src/client && npm install && npm run build",

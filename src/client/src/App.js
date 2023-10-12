@@ -16,7 +16,7 @@ function App() {
 
     fetch('/api/pool-table-booked')
       .then((res) => res.json())
-      .then((json) => setBookedStatus(json))
+      .then((json) => console.log(json))
   }, []) // empty 2nd arg - only runs once
 
   return (
