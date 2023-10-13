@@ -46,16 +46,16 @@ app.message(/^in office$/i, async ({ context, say }) => {
   const inOffice = await putInOffice(context)
 
   if (inOffice.matchedUser) {
-    // await app.client.chat.postMessage({
-    //   token: process.env.SLACK_BOT_TOKEN,
-    //   channel: inOffice.matchedUser,
-    //   text: `Hey you have been matched for a game of pool with <@${context.userId}>!`,
-    // });
-    // await app.client.chat.postMessage({
-    //   token: process.env.SLACK_BOT_TOKEN,
-    //   channel: context.userId,
-    //   text: `Hey you have been matched for a game of pool with <@${inOffice.matchedUser}>!`,
-    // });
+    await app.client.chat.postMessage({
+      token: process.env.SLACK_BOT_TOKEN,
+      channel: inOffice.matchedUser,
+      text: `Hey you have been matched for a game of pool with <@${context.userId}>!`,
+    })
+    await app.client.chat.postMessage({
+      token: process.env.SLACK_BOT_TOKEN,
+      channel: context.userId,
+      text: `Hey you have been matched for a game of pool with <@${inOffice.matchedUser}>!`,
+    })
     say('you have been matched!')
   } else {
     await say(inOffice.message)
