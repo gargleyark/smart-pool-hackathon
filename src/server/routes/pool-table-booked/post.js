@@ -1,12 +1,20 @@
-var query = require('../../bin/database.js');
-const fifthteen = 900000;
+var query = require('../../bin/database.js')
+const app = require('../../app.js')
+const fifthteen = 900000
 module.exports = postPoolTableBooked = async (req, res, next) => {
   console.log('post "pool-table-booked" route hit')
   try {
-    
-    result = await query(`INSERT INTO bookings(start_time, end_time) VALUES (to_timestamp(${Date.now()} / 1000.0), to_timestamp((${Date.now()} + ${fifthteen}) / 1000.0));`)
+    result = await query(
+      `INSERT INTO bookings(start_time, end_time) VALUES (to_timestamp(${Date.now()} / 1000.0), to_timestamp((${Date.now()} + ${fifthteen}) / 1000.0));`
+    )
 
     console.log(result)
+
+    await app.client.chat.postMessage({
+      token: process.env.SLACK_BOT_TOKEN,
+      channel: 'C0610D8L4KV',
+      text: 'Pool table is booked for the next 15 minutes :8ball:',
+    })
 
     res.send({ result })
     // return json.results || error
