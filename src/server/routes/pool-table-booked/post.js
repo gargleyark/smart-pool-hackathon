@@ -1,5 +1,4 @@
 var query = require('../../bin/database.js')
-const app = require('../../app.js')
 const fifthteen = 900000
 module.exports = postPoolTableBooked = async (req, res, next) => {
   console.log('post "pool-table-booked" route hit')
@@ -9,12 +8,6 @@ module.exports = postPoolTableBooked = async (req, res, next) => {
     )
 
     console.log(result)
-
-    await app.client.chat.postMessage({
-      token: process.env.SLACK_BOT_TOKEN,
-      channel: 'C0610D8L4KV',
-      text: 'Pool table is booked for the next 15 minutes :8ball:',
-    })
 
     res.send({ result })
     // return json.results || error
