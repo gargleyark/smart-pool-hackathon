@@ -7,10 +7,13 @@ module.exports = putInOffice = async (context) => {
     return {
       matchedUser: othersInOffice.rows[0].slack_id,
     }
+  } else {
+    result = await query(
+      `INSERT INTO in_the_office(slack_id, in_the_office) VALUES ('${
+        context.userId
+      }', to_timestamp((${Date.now()}) / 1000.0));`
+    )
   }
 
-  result = await query(
-    `INSERT INTO in_the_office(slack_id) VALUES (${context.userId});`
-  )
   return { message: 'You are in the office and ready to play! G🎱🎱d luck!' }
 }
