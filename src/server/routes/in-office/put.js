@@ -7,27 +7,10 @@ module.exports = putInOffice = async (context) => {
     return {
       matchedUser: othersInOffice.rows[0].slack_id,
     }
-  } else {
-    result = await query(
-      `INSERT INTO public.in_the_office(slack_id, in_the_office) VALUES (${
-        context.userId
-      }, to_timestamp((${Date.now()}) / 1000.0));`
-    )
   }
 
+  result = await query(
+    `INSERT INTO in_the_office(slack_id) VALUES (${context.userId});`
+  )
   return { message: 'You are in the office and ready to play! G🎱🎱d luck!' }
 }
-
-// // context looks like:
-// const contextExample = {
-//     isEnterpriseInstall: false,
-//     botToken: 'xoxb-6025375235029-6029227895314-1gOPQSzIDFU9bdw7bn35qoMi',
-//     botUserId: 'U060V6PSB98',
-//     botId: 'B0617RF9L6M',
-//     userId: 'U060U8Y089Y',
-//     teamId: 'T060RB16X0V',
-//     retryNum: undefined,
-//     retryReason: undefined,
-//     updateConversation: [Function (anonymous)],
-//     matches: [ 'in office', index: 0, input: 'in office', groups: undefined ]
-// }
