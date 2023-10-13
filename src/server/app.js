@@ -56,7 +56,6 @@ app.message(/^in office$/i, async ({ context, say }) => {
       channel: context.userId,
       text: `Hey you have been matched for a game of pool with <@${inOffice.matchedUser}>!`,
     })
-    say('you have been matched!')
   } else {
     await say(inOffice.message)
   }

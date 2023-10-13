@@ -15,5 +15,7 @@ module.exports = putInOffice = async (context) => {
     )
   }
 
-  return { message: 'You are in the office and ready to play! G🎱🎱d luck!' }
+  return {
+    message: 'You are in the waiting list and ready to play! G🎱🎱d luck!',
+  }
 }
